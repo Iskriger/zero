@@ -8,7 +8,7 @@ import '../widgets/notification_banner.dart';
 import '../widgets/notification_badge.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

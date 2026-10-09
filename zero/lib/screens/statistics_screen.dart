@@ -4,7 +4,7 @@ import '../data/shared_prefs_repository.dart';
 import '../utils/notification_manager.dart';
 
 class StatisticsScreen extends StatefulWidget {
-  const StatisticsScreen({Key? key}) : super(key: key);
+  const StatisticsScreen({super.key});
 
   @override
   _StatisticsScreenState createState() => _StatisticsScreenState();
@@ -57,8 +57,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           // Тестовое уведомление для проверки
           notificationManager.showTestNotification();
         },
-        child: const Icon(Icons.notifications),
         tooltip: 'Тестовое уведомление',
+        child: const Icon(Icons.notifications),
       ),
     );
   }
@@ -348,7 +348,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       {bool isPercent = false}) {
     return Expanded(
       child: Card(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(

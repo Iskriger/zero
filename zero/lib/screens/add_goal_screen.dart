@@ -5,7 +5,7 @@ import '../utils/notification_manager.dart';
 import 'package:provider/provider.dart';
 
 class AddGoalScreen extends StatefulWidget {
-  const AddGoalScreen({Key? key}) : super(key: key);
+  const AddGoalScreen({super.key});
 
   @override
   _AddGoalScreenState createState() => _AddGoalScreenState();
@@ -17,7 +17,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   final _descriptionController = TextEditingController();
   String _selectedCategory = 'Учеба';
   int _priority = 2;
-  DateTime _deadline = DateTime.now().add(Duration(days: 7));
+  DateTime _deadline = DateTime.now().add(const Duration(days: 7));
   final List<String> _tags = [];
   final List<String> _categories = [];
 
@@ -79,7 +79,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: _selectedCategory,
+                initialValue: _selectedCategory,
                 decoration: const InputDecoration(
                   labelText: 'Категория',
                   border: OutlineInputBorder(),
@@ -144,7 +144,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                         context: context,
                         initialDate: _deadline,
                         firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(Duration(days: 365)),
+                        lastDate: DateTime.now().add(const Duration(days: 365)),
                       );
                       if (selectedDate != null) {
                         setState(() {

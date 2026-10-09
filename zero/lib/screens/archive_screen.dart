@@ -4,7 +4,7 @@ import '../widgets/goal_card.dart';
 import '../data/shared_prefs_repository.dart';
 
 class ArchiveScreen extends StatefulWidget {
-  const ArchiveScreen({Key? key}) : super(key: key);
+  const ArchiveScreen({super.key});
 
   @override
   _ArchiveScreenState createState() => _ArchiveScreenState();
@@ -99,7 +99,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                             SnackBar(
                               content:
                                   Text('Цель "${goal.title}" восстановлена'),
-                              duration: Duration(seconds: 2),
+                              duration: const Duration(seconds: 2),
                             ),
                           );
                         },
