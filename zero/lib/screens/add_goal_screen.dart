@@ -102,6 +102,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                 children: [
                   Radio(
                     value: 1,
+                    // ignore: deprecated_member_use
                     groupValue: _priority,
                     onChanged: (value) {
                       setState(() {
