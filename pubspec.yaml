@@ -8,6 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  material_design_icons_flutter: ^7.0.7296
   
   # Хранилище работает на всех платформах!
   shared_preferences: ^2.2.2

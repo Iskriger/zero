@@ -3,6 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
+
+
+
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
@@ -88,7 +92,9 @@ class AboutScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
+                    SizedBox(height: 0),
                   ],
+                  
                 ),
               ),
             ),
@@ -193,7 +199,25 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 2),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.gite),
+                      title: const Text('GitHub разработчика'),
+                      subtitle: const Text('Официальный профиль'),
+                      onTap: () {
+                        _launchUrl('https://github.com/Iskriger');
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
           ],
         ),
       ),
@@ -203,13 +227,13 @@ class AboutScreen extends StatelessWidget {
   Widget _buildTechCard(
       String title, String subtitle, Color color, IconData icon) {
     return Card(
-      color: color.withOpacity(0.1),
+      color: color.withOpacity(0.8),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(10),
         child: Row(
           children: [
-            Icon(icon, color: color),
-            const SizedBox(width: 12),
+            Icon(icon, color: Colors.white),
+            const SizedBox(width: 3),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,14 +243,14 @@ class AboutScreen extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 14,
+                      fontSize: 12,
                     ),
                   ),
                   Text(
                     subtitle,
                     style: const TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
+                      fontSize: 9,
+                      
                     ),
                   ),
                 ],
