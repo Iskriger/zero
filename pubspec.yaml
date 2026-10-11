@@ -1,6 +1,6 @@
 name: goal_tracker
 description: Приложение для трекинга целей с категориями и тегами
-version: 1.4.0+1
+version: 1.4.1
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
