@@ -88,7 +88,6 @@ class AboutScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 12),
                   ],
                 ),
               ),
