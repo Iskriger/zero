@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeManager, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Goal Tracker',
+            title: 'Zero: Goal Tracker',
             theme: themeManager.lightTheme,
             darkTheme: themeManager.darkTheme,
             themeMode: themeManager.themeMode,

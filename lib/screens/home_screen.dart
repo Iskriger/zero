@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    'Goal Tracker',
+                    'Zero: Goal Tracker',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
