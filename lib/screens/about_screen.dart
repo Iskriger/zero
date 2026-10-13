@@ -2,14 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 
 
 
 
+final hul = AutoSizeGroup();
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
+  
 
+  
   Future<void> _launchUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
@@ -114,8 +118,8 @@ class AboutScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
               childAspectRatio: 2.5,
               children: [
                 _buildTechCard(
@@ -145,7 +149,7 @@ class AboutScreen extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
             // Особенности приложения
             const Text(
@@ -217,7 +221,21 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
             ),
-
+            const SizedBox(height: 2),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.mail),
+                    title:const Text('Если нашли баги, пишите по этой почте'),
+                    subtitle: const Text('Написать на почту'),
+                    onTap: () => _openEmail('iskriger@mail.ru'), // Замените на переменную с email пользователя
+                  )
+                ],
+              ),),
+            )
           ],
         ),
       ),
@@ -239,19 +257,18 @@ class AboutScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  AutoSizeText(
                     title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
-                    ),
+                    ),maxLines: 1,minFontSize: 10, maxFontSize: 24,
                   ),
-                  Text(
+                  AutoSizeText(
                     subtitle,
                     style: const TextStyle(
-                      fontSize: 9,
                       
-                    ),
+                    ),maxLines: 1,minFontSize: 5, maxFontSize: 24,group: hul,
                   ),
                 ],
               ),
@@ -267,8 +284,17 @@ class AboutScreen extends StatelessWidget {
       leading: Icon(icon, size: 20),
       title: Text(
         text,
-        style: const TextStyle(fontSize: 14),
+        style: const TextStyle()
       ),
     );
   }
+  Future<void> _openEmail(String email) async {
+  Uri url = Uri.parse('mailto:$email');
+
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 }

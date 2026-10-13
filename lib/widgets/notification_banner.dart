@@ -36,7 +36,7 @@ class _NotificationBannerState extends State<NotificationBanner> {
     }
 
     return Positioned(
-      top: MediaQuery.of(context).padding.top + 8,
+      top: MediaQuery.of(context).padding.top + 0,
       left: 8,
       right: 8,
       child: AnimatedOpacity(
@@ -51,16 +51,16 @@ class _NotificationBannerState extends State<NotificationBanner> {
                 },
                 child: Card(
                   elevation: 4,
-                  color: _currentNotification!.color.withOpacity(0.1),
+                  color: const Color.fromARGB(255, 132, 132, 132).withOpacity(0.9),
                   child: Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(4),
                     child: Row(
                       children: [
                         Icon(
                           _currentNotification!.icon,
                           color: _currentNotification!.color,
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 4),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +69,6 @@ class _NotificationBannerState extends State<NotificationBanner> {
                                 _currentNotification!.title,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: _currentNotification!.color,
                                 ),
                               ),
                               Text(

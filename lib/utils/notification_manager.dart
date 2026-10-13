@@ -163,7 +163,7 @@ class AppNotification {
       case NotificationType.info:
         return Colors.blue;
       case NotificationType.success:
-        return Colors.green;
+        return const Color.fromARGB(255, 255, 255, 255);
       case NotificationType.warning:
         return Colors.orange;
       case NotificationType.important:

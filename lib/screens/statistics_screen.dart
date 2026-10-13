@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 import '../data/shared_prefs_repository.dart';
-import '../utils/notification_manager.dart';
+//import '../utils/notification_manager.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -37,7 +37,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final notificationManager = Provider.of<NotificationManager>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,14 +51,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _buildStatisticsContent(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Тестовое уведомление для проверки
-          notificationManager.showTestNotification();
-        },
-        tooltip: 'Тестовое уведомление',
-        child: const Icon(Icons.notifications),
-      ),
+      
     );
   }
 
@@ -348,26 +340,24 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       {bool isPercent = false}) {
     return Expanded(
       child: Card(
-        color: color.withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.8),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              Icon(icon, color: color, size: 32),
+              Icon(icon, size: 32),
               const SizedBox(height: 8),
               Text(
                 isPercent ? '$value%' : value.toString(),
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: color,
                 ),
               ),
               Text(
                 title,
                 style: const TextStyle(
                   fontSize: 12,
-                  color: Colors.grey,
                 ),
                 textAlign: TextAlign.center,
               ),

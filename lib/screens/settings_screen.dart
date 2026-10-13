@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tracker/widgets/theme_aware_text.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/theme_manager.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -61,7 +62,7 @@ class SettingsScreen extends StatelessWidget {
               Navigator.pushNamed(
                   context, '/notifications'); // <-- ВЕДЁМ НА НОВЫЙ ЭКРАН
             },
-          ),
+          ),/*
           ListTile(
             leading: const Icon(Icons.backup),
             title: const Text('Резервное копирование'),
@@ -74,7 +75,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               );
             },
-          ),
+          ),*/
 
           const Divider(),
 
@@ -155,30 +156,45 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Как пользоваться приложением'),
-        content: const SingleChildScrollView(
+        content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'Основные функции:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
-              Text('• Нажмите "+" для добавления новой цели'),
-              Text('• Свайп вправо - отметить как выполненную'),
-              Text('• Свайп влево - удалить цель'),
-              Text('• Нажмите на цель для просмотра деталей'),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 8),
+              const Text('• Нажмите "+" для добавления новой цели'),
+              const Text('• Свайп вправо - отметить как выполненную'),
+              const Text('• Свайп влево - удалить цель'),
+              const Text('• Нажмите на цель для просмотра деталей'),
+              const SizedBox(height: 16),
+              const Text(
                 'Категории и теги:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
-              Text('• Используйте категории для организации целей'),
-              Text('• Добавляйте теги для быстрого поиска'),
-              Text('• Настройте приоритеты для важных задач'),
+              const SizedBox(height: 8),
+              const Text('• Используйте категории для организации целей'),
+              const Text('• Добавляйте теги для быстрого поиска'),
+              const Text('• Настройте приоритеты для важных задач'),
+              Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.mail),
+                    title:const Text('Если нашли баги, пишите по этой почте'),
+                    subtitle: const Text('Написать на почту'),
+                    onTap: () => _openEmail('iskriger@mail.ru'), // Замените на переменную с email пользователя
+                  )
+                ],
+              ),),
+            )
             ],
+            
           ),
         ),
         actions: [
@@ -186,8 +202,21 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text('Понятно'),
           ),
+          
+          
         ],
+        
       ),
+      
     );
+  }
+}
+Future<void> _openEmail(String email) async {
+  Uri url = Uri.parse('mailto:$email');
+
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

@@ -16,16 +16,16 @@ class ThemeManager with ChangeNotifier {
     notifyListeners();
   }
 
-  ThemeData get lightTheme {
+  ThemeData get lightTheme { //белая тема
     return ThemeData(
       brightness: Brightness.light,
-      primaryColor: Colors.blue,
+      primaryColor: Colors.blue, // боковая цветатура
       colorScheme: ColorScheme.light(
-        primary: Colors.blue,
+        primary: const Color.fromARGB(182, 199, 155, 23),
         secondary: Colors.blueAccent,
-        surface: Colors.grey[50]!,
+        surface: Colors.grey[50]!,//цвет кнопки в главном экране
       ),
-      scaffoldBackgroundColor: Colors.grey[50],
+      scaffoldBackgroundColor: Colors.grey[50], //цвет главного экрана
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black87,
@@ -61,7 +61,7 @@ class ThemeManager with ChangeNotifier {
         labelMedium: TextStyle(color: Colors.black87),
         labelSmall: TextStyle(color: Colors.black87),
       ),
-      iconTheme: const IconThemeData(color: Colors.black54),
+      iconTheme: const IconThemeData(color: Color.fromARGB(121, 5, 5, 5)),//иконки
       dividerColor: Colors.grey[300],
       inputDecorationTheme: InputDecorationTheme(
         fillColor: Colors.white,
@@ -84,19 +84,22 @@ class ThemeManager with ChangeNotifier {
     );
   }
 
-  ThemeData get darkTheme {
+
+//---------------------------------------------------------------------------------------//
+
+  ThemeData get darkTheme { //темная тема
     return ThemeData(
       brightness: Brightness.dark,
-      primaryColor: Colors.blue[300],
+      primaryColor: Colors.blue[300],// боковая цветатура
       colorScheme: ColorScheme.dark(
-        primary: Colors.blue[300]!,
+        primary: const Color.fromARGB(185, 232, 163, 58),// текст кнопка на главном экране
         secondary: Colors.blue[200]!,
-        surface: Colors.grey[850]!,
+        surface: Colors.grey[850]!,//боковая нижняя цветатура
         onSurface: Colors.white,
       ),
       scaffoldBackgroundColor: Colors.grey[900],
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.grey[850],
+        backgroundColor: Colors.grey[850], //setting
         foregroundColor: Colors.white,
         elevation: 1,
         titleTextStyle: const TextStyle(
@@ -104,10 +107,10 @@ class ThemeManager with ChangeNotifier {
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),//бар иконки цвета
       ),
       cardTheme: CardThemeData(
-        color: Colors.grey[850],
+        color: const Color.fromARGB(184, 83, 83, 83),
         elevation: 1,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -123,14 +126,14 @@ class ThemeManager with ChangeNotifier {
         titleLarge: TextStyle(color: Colors.white),
         titleMedium: TextStyle(color: Colors.white),
         titleSmall: TextStyle(color: Colors.white),
-        bodyLarge: TextStyle(color: Colors.white70),
-        bodyMedium: TextStyle(color: Colors.white70),
-        bodySmall: TextStyle(color: Colors.white60),
+        bodyLarge: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+        bodyMedium: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+        bodySmall: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         labelLarge: TextStyle(color: Colors.white),
         labelMedium: TextStyle(color: Colors.white),
         labelSmall: TextStyle(color: Colors.white),
       ),
-      iconTheme: const IconThemeData(color: Colors.white70),
+      iconTheme: const IconThemeData(color: Color.fromARGB(255, 161, 161, 161)),
       dividerColor: Colors.grey[700],
       inputDecorationTheme: InputDecorationTheme(
         fillColor: Colors.grey[800],
@@ -152,12 +155,12 @@ class ThemeManager with ChangeNotifier {
         counterStyle: const TextStyle(color: Colors.white),
       ),
       dialogTheme: DialogThemeData(
-        backgroundColor: Colors.grey[850],
+        backgroundColor: const Color.fromARGB(255, 219, 219, 219),
         titleTextStyle: const TextStyle(color: Colors.white),
-        contentTextStyle: const TextStyle(color: Colors.white70),
+        contentTextStyle: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: Colors.grey[800],
+        backgroundColor: const Color.fromARGB(255, 150, 148, 148),
         contentTextStyle: const TextStyle(color: Colors.white),
         actionTextColor: Colors.blue[300],
       ),

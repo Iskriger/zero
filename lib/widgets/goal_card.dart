@@ -27,7 +27,7 @@ class GoalCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(8),
       color: goal.isCompleted
-          ? (isDark ? Colors.green[900]!.withOpacity(0.3) : Colors.green[50])
+          ? (isDark ? Colors.green[900]!.withOpacity(0.1) : Colors.green[50])
           : null,
       child: Padding(
         padding: const EdgeInsets.all(12),

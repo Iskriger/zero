@@ -35,12 +35,16 @@ class CategoriesScreen extends StatelessWidget {
               title: Text(category['name'] as String),
               trailing: Text('${category['count']} целей'),
               onTap: () {
-                // Редактирование категории
+                ScaffoldMessenger.of(context).showSnackBar( 
+                  SnackBar(
+                  content: Text('Функция редактирования категорий в разработке'),
+                ));
               },
             ),
           );
         },
       ),
+      /*
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _addCategory(context);
@@ -49,7 +53,7 @@ class CategoriesScreen extends StatelessWidget {
       ),
     );
   }
-
+  
   void _addCategory(BuildContext context) {
     showDialog(
       context: context,
@@ -76,7 +80,7 @@ class CategoriesScreen extends StatelessWidget {
             ),
           ],
         );
-      },
+      },*/
     );
   }
 }

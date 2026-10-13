@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   material_design_icons_flutter: ^7.0.7296
+  auto_size_text: ^3.0.0
   
   # Хранилище работает на всех платформах!
   shared_preferences: ^2.2.2
@@ -17,7 +18,7 @@ dependencies:
   provider: ^6.0.5
   
   # Работа с датами
-  intl: ^0.18.1
+  intl: ^0.20.3
   
   # URL для ссылок
   url_launcher: ^6.1.14
@@ -29,7 +30,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
