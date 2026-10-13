@@ -190,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Версия 1.4.1',
+                    'Версия 1.4.2',
                     style: TextStyle(color: Colors.white70, fontSize: 10),
                   ),
                 ],

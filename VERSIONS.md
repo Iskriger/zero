@@ -7,6 +7,15 @@
  - удалены нефункциональные кнопки
 
 
+--------------------------------------------------------------------------
+
+ - The Drawer was reduced and text sizes were reworked across different screens.
+ - Developer’s Email was added for bug reports or other requests; also added to the Help section in Settings.
+ - Colors of some interface icons were changed.
+ - Colors in the Statistics section (tab “Overall Statistics”) were updated.
+ - The design of the internal notification was redone.
+ - Non‑functional buttons were removed.
+
 
 ## Version 1.4.1
  - Добавлена кнопка «GitHub developer» в разделе «О приложении» (minor).

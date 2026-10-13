@@ -95,7 +95,7 @@ class SettingsScreen extends StatelessWidget {
             leading: const Icon(Icons.info),
             title: const ThemeAwareText('О программе'),
             subtitle:
-                const ThemeAwareText('Версия 1.4.0, разработчик и технологии'),
+                const ThemeAwareText('Версия 1.4.2, разработчик и технологии'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
               Navigator.pushNamed(context, '/about');
