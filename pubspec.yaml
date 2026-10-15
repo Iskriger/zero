@@ -1,6 +1,6 @@
 name: goal_tracker
 description: Приложение для трекинга целей с категориями и тегами
-version: 1.4.2
+version: 1.4.3
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -23,9 +23,6 @@ dependencies:
   # URL для ссылок
   url_launcher: ^6.1.14
   fl_chart: ^1.1.1
-  sqflite: ^2.4.2
-  hive: ^2.2.3
-  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
@@ -35,3 +32,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/

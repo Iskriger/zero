@@ -3,5 +3,5 @@ flutter_launcher_icons:
   ios: true
   windows:
     generate: true
-    image_path: "assets/icons/Logo - zero.png"
-  image_path: "assets/icons/Logo - zero.png"
+    image_path: "assets/icons/logo_zero.png"
+  image_path: "assets/icons/logo_zero.png"

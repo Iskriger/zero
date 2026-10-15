@@ -1,39 +1,18 @@
-import 'package:goal_tracker/models/subtask.dart';
-import 'package:hive/hive.dart';
+import 'subtask.dart';
 
-@HiveType(typeId: 0)
+/// Модель цели. Сериализация — через SharedPreferences (JSON),
+/// см. lib/data/shared_prefs_repository.dart
 class Goal {
-  @HiveField(0)
   int? id;
-
-  @HiveField(1)
   final String title;
-
-  @HiveField(2)
   final String? description;
-
-  @HiveField(3)
   final String category;
-
-  @HiveField(4)
   final int priority;
-
-  @HiveField(5)
   final List<String> tags;
-
-  @HiveField(6)
   final DateTime deadline;
-
-  @HiveField(7)
   bool isCompleted;
-
-  @HiveField(8)
   bool isArchived;
-
-  @HiveField(9)
   final DateTime createdAt;
-
-  @HiveField(10)
   final List<Subtask> subtasks;
 
   Goal({
@@ -47,9 +26,10 @@ class Goal {
     this.isCompleted = false,
     this.isArchived = false,
     required this.createdAt,
-    this.subtasks = const [],
-  });
+    List<Subtask>? subtasks,
+  }) : subtasks = subtasks ?? [];
 
+  /// Внутренний формат хранилища (SharedPreferences, JSON).
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -57,29 +37,44 @@ class Goal {
       'description': description,
       'category': category,
       'priority': priority,
-      'tags': tags.join(','),
+      'tags': tags,
       'deadline': deadline.toIso8601String(),
-      'isCompleted': isCompleted ? 1 : 0,
-      'isArchived': isArchived ? 1 : 0,
+      'isCompleted': isCompleted,
+      'isArchived': isArchived,
       'createdAt': createdAt.toIso8601String(),
+      'subtasks': subtasks
+          .map((s) => {'title': s.title, 'isCompleted': s.isCompleted})
+          .toList(),
     };
   }
 
   factory Goal.fromMap(Map<String, dynamic> map) {
+    final rawTags = map['tags'];
     return Goal(
       id: map['id'],
       title: map['title'],
       description: map['description'],
       category: map['category'],
-      priority: map['priority'],
-      tags: (map['tags'] as String)
-          .split(',')
-          .where((t) => t.isNotEmpty)
-          .toList(),
+      priority: map['priority'] as int? ?? 2,
+      tags: rawTags == null
+          ? const []
+          : (rawTags is List
+              ? rawTags.map((t) => t.toString()).toList()
+              : rawTags
+                  .toString()
+                  .split(',')
+                  .where((t) => t.isNotEmpty)
+                  .toList()),
       deadline: DateTime.parse(map['deadline']),
-      isCompleted: map['isCompleted'] == 1,
-      isArchived: map['isArchived'] == 1,
+      isCompleted: map['isCompleted'] == true || map['isCompleted'] == 1,
+      isArchived: map['isArchived'] == true || map['isArchived'] == 1,
       createdAt: DateTime.parse(map['createdAt']),
+      subtasks: ((map['subtasks'] as List?) ?? [])
+          .map((s) => Subtask(
+                title: s['title'],
+                isCompleted: s['isCompleted'] == true,
+              ))
+          .toList(),
     );
   }
 }

@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Provider.of<NotificationManager>(context, listen: false);
       notificationManager.checkForDeadlines(goals);
     } catch (e) {
-      print('!!Ошибка загрузки целей: $e');
+      debugPrint('Ошибка загрузки целей: $e');
       setState(() {
         _isLoading = false;
       });

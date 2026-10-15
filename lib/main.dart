@@ -10,9 +10,14 @@ import 'screens/about_screen.dart';
 import 'screens/notifications_screen.dart';
 import 'utils/theme_manager.dart';
 import 'utils/notification_manager.dart';
+import 'data/shared_prefs_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Инициализируем хранилище до запуска UI, чтобы первый кадр
+  // не зависел от ленивой инициализации в репозитории.
+  await SharedPrefsRepository.init();
 
   runApp(const MyApp());
 }
