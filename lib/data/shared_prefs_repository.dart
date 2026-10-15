@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/goal.dart';
-import '../models/subtask.dart';
 
 class SharedPrefsRepository {
   static const String _goalsKey = 'goals_list_v3';
@@ -12,9 +12,9 @@ class SharedPrefsRepository {
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
 
-    // Добавляем тестовые данные если база пустая
-    final goals = await getGoals();
-    if (goals.isEmpty) {
+    // Добавляем демо-данные, если хранилище совсем пустое
+    // (ключа ещё не было — значит приложение запущено впервые).
+    if (!_prefs!.containsKey(_goalsKey)) {
       await _addSampleData();
     }
   }
@@ -31,7 +31,7 @@ class SharedPrefsRepository {
       final List<dynamic> goalsJson = jsonDecode(jsonString);
       return goalsJson.map((json) => _goalFromJson(json)).toList();
     } catch (e) {
-      print('❌ Ошибка загрузки целей: $e');
+      debugPrint('Ошибка загрузки целей: $e');
       return [];
     }
   }
@@ -43,17 +43,7 @@ class SharedPrefsRepository {
 
   static Future<List<Goal>> getArchivedGoals() async {
     final allGoals = await getAllGoals();
-    print('📂 Всего целей: ${allGoals.length}');
-    print('📂 Архивные цели: ${allGoals.where((g) => g.isArchived).length}');
-
-    final archivedGoals = allGoals.where((goal) => goal.isArchived).toList();
-
-    // Отладка
-    for (var goal in archivedGoals) {
-      print('📂 Архив: ${goal.title} (id: ${goal.id})');
-    }
-
-    return archivedGoals;
+    return allGoals.where((goal) => goal.isArchived).toList();
   }
 
   static Future<int> addGoal(Goal goal) async {
@@ -247,51 +237,10 @@ class SharedPrefsRepository {
     for (final goal in sampleGoals) {
       await addGoal(goal);
     }
-
-    print('✅ Добавлено ${sampleGoals.length} тестовых целей');
   }
 
-  static Map<String, dynamic> _goalToJson(Goal goal) {
-    return {
-      'id': goal.id,
-      'title': goal.title,
-      'description': goal.description,
-      'category': goal.category,
-      'priority': goal.priority,
-      'tags': goal.tags,
-      'deadline': goal.deadline.toIso8601String(),
-      'isCompleted': goal.isCompleted,
-      'isArchived': goal.isArchived,
-      'createdAt': goal.createdAt.toIso8601String(),
-      'subtasks': goal.subtasks
-          .map((s) => {
-                'title': s.title,
-                'isCompleted': s.isCompleted,
-              })
-          .toList(),
-    };
-  }
+  static Map<String, dynamic> _goalToJson(Goal goal) => goal.toMap();
 
-  static Goal _goalFromJson(Map<String, dynamic> json) {
-    return Goal(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      category: json['category'],
-      priority: json['priority'],
-      tags: List<String>.from(json['tags']),
-      deadline: DateTime.parse(json['deadline']),
-      isCompleted: json['isCompleted'],
-      isArchived: json['isArchived'],
-      createdAt: DateTime.parse(json['createdAt']),
-      subtasks: (json['subtasks'] as List)
-          .map((s) => Subtask(
-                title: s['title'],
-                isCompleted: s['isCompleted'],
-              ))
-          .toList(),
-    );
-  }
-
-  static Future<dynamic> getGoals() async {}
+  static Goal _goalFromJson(Map<String, dynamic> json) =>
+      Goal.fromMap(json);
 }

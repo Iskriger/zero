@@ -28,7 +28,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Ошибка загрузки статистики: $e');
+      debugPrint('Ошибка загрузки статистики: $e');
       setState(() {
         _isLoading = false;
       });

@@ -27,9 +27,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
         _archivedGoals = goals;
         _isLoading = false;
       });
-      print('Загружено архивных целей: ${goals.length}');
     } catch (e) {
-      print('!!Ошибка загрузки архива!!: $e');
+      debugPrint('Ошибка загрузки архива: $e');
       setState(() {
         _isLoading = false;
       });

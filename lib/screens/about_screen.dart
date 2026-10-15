@@ -35,10 +35,18 @@ class AboutScreen extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  Icon(
-                    Icons.flag,
-                    size: 80,
-                    color: Theme.of(context).primaryColor,
+                  ClipOval(
+                    child: Image.asset(
+                      'assets/icons/logo_zero.png',
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.flag,
+                        size: 80,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   const Text(
