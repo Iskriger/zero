@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeManager with ChangeNotifier {
+  static const String _themeKey = 'theme_mode';
   ThemeMode _themeMode = ThemeMode.light;
 
   ThemeMode get themeMode => _themeMode;
@@ -8,12 +10,31 @@ class ThemeManager with ChangeNotifier {
   set themeMode(ThemeMode mode) {
     _themeMode = mode;
     notifyListeners();
+    _save();
   }
 
   void toggleTheme() {
-    _themeMode =
+    themeMode =
         _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    notifyListeners();
+  }
+
+  /// Восстановить выбранный режим темы из хранилища (вызывается в main()).
+  Future<void> restore() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString(_themeKey);
+    if (saved != null) {
+      _themeMode = switch (saved) {
+        'dark' => ThemeMode.dark,
+        'system' => ThemeMode.system,
+        _ => ThemeMode.light,
+      };
+      notifyListeners();
+    }
+  }
+
+  Future<void> _save() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_themeKey, _themeMode.name);
   }
 
   ThemeData get lightTheme { //белая тема

@@ -13,6 +13,7 @@ class Goal {
   bool isCompleted;
   bool isArchived;
   final DateTime createdAt;
+  DateTime? completedAt;
   final List<Subtask> subtasks;
 
   Goal({
@@ -26,8 +27,33 @@ class Goal {
     this.isCompleted = false,
     this.isArchived = false,
     required this.createdAt,
+    this.completedAt,
     List<Subtask>? subtasks,
   }) : subtasks = subtasks ?? [];
+
+  /// Прогресс по подзадачам: от 0.0 до 1.0 (1.0, если подзадач нет).
+  double get subtaskProgress {
+    if (subtasks.isEmpty) return isCompleted ? 1.0 : 0.0;
+    return subtasks.where((s) => s.isCompleted).length / subtasks.length;
+  }
+
+  /// Осталось дней до дедлайна (отрицательное — просрочено).
+  int get daysLeft => deadline.difference(DateTime.now()).inDays;
+
+  bool get isOverdue => !isCompleted && deadline.isBefore(DateTime.now());
+
+  /// Человекочитаемая подсказка о сроке: «просрочено на N дн.»,
+  /// «сегодня», «завтра», «через N дн.» или дата для дальних сроков.
+  String get deadlineHint {
+    if (isCompleted) return 'выполнено';
+    final days = daysLeft;
+    if (days < -1) return 'просрочено на ${-days} дн.';
+    if (days < 0) return 'просрочено';
+    if (days == 0) return 'сегодня';
+    if (days == 1) return 'завтра';
+    if (days <= 30) return 'через $days дн.';
+    return '${deadline.day}.${deadline.month}.${deadline.year}';
+  }
 
   /// Внутренний формат хранилища (SharedPreferences, JSON).
   Map<String, dynamic> toMap() {
@@ -42,9 +68,8 @@ class Goal {
       'isCompleted': isCompleted,
       'isArchived': isArchived,
       'createdAt': createdAt.toIso8601String(),
-      'subtasks': subtasks
-          .map((s) => {'title': s.title, 'isCompleted': s.isCompleted})
-          .toList(),
+      'completedAt': completedAt?.toIso8601String(),
+      'subtasks': subtasks.map((s) => s.toMap()).toList(),
     };
   }
 
@@ -69,11 +94,11 @@ class Goal {
       isCompleted: map['isCompleted'] == true || map['isCompleted'] == 1,
       isArchived: map['isArchived'] == true || map['isArchived'] == 1,
       createdAt: DateTime.parse(map['createdAt']),
+      completedAt: map['completedAt'] != null
+          ? DateTime.tryParse(map['completedAt'].toString())
+          : null,
       subtasks: ((map['subtasks'] as List?) ?? [])
-          .map((s) => Subtask(
-                title: s['title'],
-                isCompleted: s['isCompleted'] == true,
-              ))
+          .map((s) => Subtask.fromMap(Map<String, dynamic>.from(s as Map)))
           .toList(),
     );
   }
