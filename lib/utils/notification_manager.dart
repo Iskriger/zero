@@ -73,30 +73,38 @@ class NotificationManager with ChangeNotifier {
     return _notifications.where((n) => !n.isRead).length;
   }
 
+  // Хеш id целей, по которым уведомление о дедлайне уже показано
+  // в текущей сессии — чтобы не спамить при каждом обновлении списка.
+  final Set<int> _deadlineNotifiedIds = {};
+
   // Проверка на просроченные цели
   void checkForDeadlines(List<Goal> goals) {
     final now = DateTime.now();
 
     for (final goal in goals) {
       if (goal.isCompleted || goal.isArchived) continue;
+      if (goal.id == null) continue;
+
+      // Показываем только одно уведомление на цель за сессию
+      if (_deadlineNotifiedIds.contains(goal.id)) continue;
 
       final daysUntilDeadline = goal.deadline.difference(now).inDays;
 
-      // Если осталось 1 день
-      if (daysUntilDeadline == 1) {
-        addNotification(
-          title: 'Скоро дедлайн!',
-          message: 'Завтра истекает срок цели: "${goal.title}"',
-          type: NotificationType.warning,
-        );
-      }
-
-      // Если просрочена
       if (goal.deadline.isBefore(now)) {
+        // Просрочена
+        _deadlineNotifiedIds.add(goal.id!);
         addNotification(
           title: 'Цель просрочена!',
           message: 'Просрочена цель: "${goal.title}"',
           type: NotificationType.important,
+        );
+      } else if (daysUntilDeadline <= 1) {
+        // Осталось менее суток
+        _deadlineNotifiedIds.add(goal.id!);
+        addNotification(
+          title: 'Скоро дедлайн!',
+          message: 'Завтра истекает срок цели: "${goal.title}"',
+          type: NotificationType.warning,
         );
       }
     }
@@ -163,7 +171,7 @@ class AppNotification {
       case NotificationType.info:
         return Colors.blue;
       case NotificationType.success:
-        return const Color.fromARGB(255, 255, 255, 255);
+        return Colors.green;
       case NotificationType.warning:
         return Colors.orange;
       case NotificationType.important:

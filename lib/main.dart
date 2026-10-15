@@ -8,16 +8,27 @@ import 'screens/statistics_screen.dart';
 import 'screens/categories_screen.dart';
 import 'screens/about_screen.dart';
 import 'screens/notifications_screen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'utils/theme_manager.dart';
 import 'utils/notification_manager.dart';
+import 'data/goals_store.dart';
 import 'data/shared_prefs_repository.dart';
 
-void main() async {
+/// Глобальный доступ к версии приложения (обновляется в main()).
+/// Используется в шапке drawer'а, настройках и «О приложении»,
+/// чтобы номер версии не приходилось править в трёх местах.
+String appVersion = '';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Инициализируем хранилище до запуска UI, чтобы первый кадр
   // не зависел от ленивой инициализации в репозитории.
   await SharedPrefsRepository.init();
+
+  // Реальная версия из pubspec.yaml — больше не хардкодим её в виджетах.
+  final info = await PackageInfo.fromPlatform();
+  appVersion = info.version;
 
   runApp(const MyApp());
 }
@@ -29,8 +40,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeManager()),
+        ChangeNotifierProvider(create: (_) => ThemeManager()..restore()),
         ChangeNotifierProvider(create: (_) => NotificationManager()),
+        ChangeNotifierProvider(create: (_) => GoalsStore()..load()),
       ],
       child: Consumer<ThemeManager>(
         builder: (context, themeManager, child) {

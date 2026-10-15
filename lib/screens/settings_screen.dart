@@ -29,13 +29,28 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
           ),
-          SwitchListTile(
-            title: const Text('Темная тема'),
-            subtitle: const Text('Переключение между светлой и темной темой'),
-            value: themeManager.themeMode == ThemeMode.dark,
-            onChanged: (value) {
-              themeManager.themeMode = value ? ThemeMode.dark : ThemeMode.light;
-            },
+          ListTile(
+            title: const Text('Тема оформления'),
+            subtitle: Text(switch (themeManager.themeMode) {
+              ThemeMode.dark => 'Тёмная',
+              ThemeMode.system => 'Как в системе',
+              _ => 'Светлая',
+            }),
+            trailing: DropdownButton<ThemeMode>(
+              value: themeManager.themeMode,
+              underline: const SizedBox.shrink(),
+              items: const [
+                DropdownMenuItem(
+                    value: ThemeMode.light, child: Text('Светлая')),
+                DropdownMenuItem(
+                    value: ThemeMode.dark, child: Text('Тёмная')),
+                DropdownMenuItem(
+                    value: ThemeMode.system, child: Text('Системная')),
+              ],
+              onChanged: (mode) {
+                if (mode != null) themeManager.themeMode = mode;
+              },
+            ),
           ),
 
           const Divider(),

@@ -24,6 +24,9 @@ dependencies:
   url_launcher: ^6.1.14
   fl_chart: ^1.1.1
 
+  # Реальная версия приложения из pubspec.yaml (в UI вместо хардкода)
+  package_info_plus: ^8.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

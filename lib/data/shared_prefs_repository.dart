@@ -38,7 +38,13 @@ class SharedPrefsRepository {
 
   static Future<List<Goal>> getActiveGoals() async {
     final allGoals = await getAllGoals();
-    return allGoals.where((goal) => !goal.isArchived).toList();
+    final active = allGoals.where((goal) => !goal.isArchived).toList();
+    // Актуальные (не выполненные) и с ближайшим дедлайном — наверху
+    active.sort((a, b) {
+      if (a.isCompleted != b.isCompleted) return a.isCompleted ? 1 : -1;
+      return a.deadline.compareTo(b.deadline);
+    });
+    return active;
   }
 
   static Future<List<Goal>> getArchivedGoals() async {
@@ -85,8 +91,29 @@ class SharedPrefsRepository {
 
     if (index != -1) {
       goals[index].isCompleted = completed;
+      // Фиксируем дату выполнения для статистики
+      goals[index].completedAt = completed ? DateTime.now() : null;
       await _saveGoals(goals);
     }
+  }
+
+  /// Переключить выполнение подзадачи.
+  static Future<void> toggleSubtask(
+      int goalId, int subtaskIndex, bool completed) async {
+    final goals = await getAllGoals();
+    final index = goals.indexWhere((g) => g.id == goalId);
+    if (index == -1) return;
+
+    final subtasks = goals[index].subtasks;
+    if (subtaskIndex < 0 || subtaskIndex >= subtasks.length) return;
+
+    subtasks[subtaskIndex].isCompleted = completed;
+    await _saveGoals(goals);
+  }
+
+  /// Удалить цель безвозвратно (из хранилища).
+  static Future<void> removeGoal(int id) async {
+    await deleteGoal(id);
   }
 
   static Future<void> archiveGoal(int id, bool archived) async {
