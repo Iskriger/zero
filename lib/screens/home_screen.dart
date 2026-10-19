@@ -192,14 +192,17 @@ class _HomeScreenState extends State<HomeScreen> {
               avatar: const Icon(Icons.category, size: 16),
               label: Text(_categoryFilter ?? 'Категория'),
               visualDensity: VisualDensity.compact,
-              selected: _categoryFilter != null,
+              // Подсветка активного фильтра (у Chip нет параметра selected).
+              backgroundColor: _categoryFilter != null
+                  ? Theme.of(context).primaryColor.withOpacity(0.12)
+                  : null,
+              side: BorderSide(
+                color: _categoryFilter != null
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey.shade400,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
-                side: BorderSide(
-                  color: _categoryFilter != null
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey.shade400,
-                ),
               ),
             ),
           ),
@@ -223,14 +226,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 _ => 'Приоритет',
               }),
               visualDensity: VisualDensity.compact,
-              selected: _priorityFilter != null,
+              // Подсветка активного фильтра (у Chip нет параметра selected).
+              backgroundColor: _priorityFilter != null
+                  ? Theme.of(context).primaryColor.withOpacity(0.12)
+                  : null,
+              side: BorderSide(
+                color: _priorityFilter != null
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey.shade400,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
-                side: BorderSide(
-                  color: _priorityFilter != null
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey.shade400,
-                ),
               ),
             ),
           ),

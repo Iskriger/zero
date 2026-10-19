@@ -8,6 +8,11 @@ class SharedPrefsRepository {
   static const String _categoriesKey = 'categories_list_v1';
   static SharedPreferences? _prefs;
 
+  /// Сброс кэша хранилища. Используется только в интеграционных тестах,
+  /// чтобы каждый тест начинал с «чистого» SharedPreferences.
+  @visibleForTesting
+  static void resetCacheForTesting() => _prefs = null;
+
   // Инициализация
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();

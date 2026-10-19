@@ -2,10 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:goal_tracker/data/shared_prefs_repository.dart';
 import 'package:goal_tracker/models/goal.dart';
+import 'package:goal_tracker/models/subtask.dart';
 
 void main() {
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
+    SharedPrefsRepository.resetCacheForTesting();
     await SharedPrefsRepository.init();
     // Чистим хранилище перед каждым тестом, чтобы тесты были независимыми.
     await SharedPrefsRepository.clearAll();
@@ -38,8 +40,22 @@ void main() {
 
     test('updateGoal сохраняет изменения', () async {
       final id = await SharedPrefsRepository.addGoal(makeGoal('Было'));
-      final goal = (await SharedPrefsRepository.getAllGoals()).first;
-      goal.title = 'Стало';
+      final old = (await SharedPrefsRepository.getAllGoals()).first;
+      // title в модели immutable — обновляем цель целиком.
+      final goal = Goal(
+        id: old.id,
+        title: 'Стало',
+        description: old.description,
+        category: old.category,
+        priority: old.priority,
+        tags: old.tags,
+        deadline: old.deadline,
+        isCompleted: old.isCompleted,
+        isArchived: old.isArchived,
+        createdAt: old.createdAt,
+        completedAt: old.completedAt,
+        subtasks: old.subtasks,
+      );
       await SharedPrefsRepository.updateGoal(goal);
 
       final updated = (await SharedPrefsRepository.getAllGoals())
