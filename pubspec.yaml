@@ -1,0 +1,33 @@
+name: goal_tracker
+description: Приложение для трекинга целей с категориями и тегами
+version: 1.4.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Хранилище работает на всех платформах!
+  shared_preferences: ^2.2.2
+  
+  # Управление состоянием
+  provider: ^6.0.5
+  
+  # Работа с датами
+  intl: ^0.18.1
+  
+  # URL для ссылок
+  url_launcher: ^6.1.14
+  fl_chart: ^1.1.1
+  sqflite: ^2.4.2
+  hive: ^2.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
